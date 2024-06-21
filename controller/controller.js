@@ -73,7 +73,7 @@ export const updateBook = async (req, res) => {
     books.splice(0, books.length, ...updatedBooks);
 
     return res
-      .setatus(204)
+      .status(204)
       .json({ message: "Book updated successfully: ", updatedBooks });
   } catch (error) {
     console.error("Error updating book:", error);
@@ -87,16 +87,15 @@ export const deleteBook = async (req, res) => {
     let bookIndex = books.findIndex((item) => item.id === bookId);
 
     if (bookIndex === -1) {
-      return res.status(404).json({ message: "Book not found in the data: " });
+      return res.status(404).json({
+        message: `Book not found in the data with the ID: ${bookId}`,
+      });
     }
-    const deletedBook = books[bookIndex];
     books.splice(bookIndex, 1);
 
-    res
-      .status(204)
-      .json({ message: "Book deleted successfully: ", deletedBook });
+    return res.status(204).json({ message: "Book deleted successfully " });
   } catch (error) {
     console.error("Error deleting book:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
