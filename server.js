@@ -1,17 +1,13 @@
-var express = require("express"),
-  bodyParser = require("body-parser");
+import express from "express";
+import route from "./routes/books.js";
 
 const app = express();
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.use(bodyParser.json());
+const port = 5001;
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use("/books", require("./routes/books"));
+app.use("/", route);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT);
-
-console.debug("Server listening on port: " + PORT);
+app.listen(port, () => {
+  console.log(`The server is successfully running on port ${port}`);
+});
